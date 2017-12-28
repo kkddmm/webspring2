@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<!-- 빈 생성, DI 처리 -->
+	<context:component-scan base-package="kr.or.nextit" />
+
+	<!-- AOP 관련 설정. -->
+	<!-- <bean id="loggingAdvice" class="kr.or.nextit.aop.SimpleLoggingAdvice"/> -->
+	
+	<!-- <aop:config> -->
+		<!-- 거의 특정클래스 잡을때 execution -->
+		<!-- <aop:pointcut expression="execution(public * kr.or.nextit..*Service.*(..))" id="servicePointCut"/>
+		<aop:aspect id="loggingAspect" ref="loggingAdvice">
+			<aop:around method="logging" pointcut-ref="servicePointCut"/>
+		</aop:aspect>
+	</aop:config> -->
+	
+	<bean id="loggingAdvice" class="kr.or.nextit.aop.xml.LoggingAdvice"/>
+	
+	<aop:config>
+		<aop:pointcut expression="execution(public * kr.or.nextit..*ServiceImpl.*(..))" id="servicePointCut"/>
+		<aop:aspect id="loggingAspect" ref="loggingAdvice">
+			<aop:before pointcut-ref="servicePointCut" method="before"/>
+			<aop:after-returning  pointcut-ref="servicePointCut" method="afterReturning" returning="retVal"/>
+			<aop:after-throwing pointcut-ref="servicePointCut" method="afterThrowing" throwing="e"/>
+			<aop:after pointcut-ref="servicePointCut" method="after"/>
+			<aop:around pointcut-ref="servicePointCut" method="around"/>
+		</aop:aspect>
+	</aop:config>
+	
+</beans>

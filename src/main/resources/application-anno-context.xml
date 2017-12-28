@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<!-- @Required, @Autowired, @Qualifier, @Resource 등 어노테이션을 사용할 수 있게 설정.-->
+	<!-- <context:annotation-config/>
+	
+	<bean id="memberService" class="kr.or.nextit.service.impl.MemberServiceImpl" />
+	
+	<bean id="memberDao" class="kr.or.nextit.dao.MemberDao" /> -->
+
+	<!-- 
+		context:annotation-config 기능도 기본 포함.
+		@Repository, @Service, @Controller, @Component 어노테이션 사용 가능.
+	-->
+	<context:component-scan base-package="kr.or.nextit">
+		<!-- 포함 -->
+		<!-- <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/> -->
+		<!-- 배제 -->
+		<!-- <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/> -->
+		<!-- 배제 -->
+		<!-- <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/> -->
+	</context:component-scan>
+
+</beans>
